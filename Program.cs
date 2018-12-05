@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
@@ -9,8 +9,9 @@ namespace Console_App_NEW
 {
     class Program
     {
-
-        protected static List<Employee> EmployeeList = new List<Employee>();
+        // Вот начиная с этого места и во всех других методах у тебя везде вместо public стоит protected static
+        // Для чего? Какой ты смысл в это вкладываешь?
+        pubic List<Employee> EmployeeList = new List<Employee>();
 
         static void Main(string[] args)
         {
@@ -49,11 +50,7 @@ namespace Console_App_NEW
             Console.WriteLine("Введите одну из доступных команд: \nList - показать список доступных запросов \nAdd - добавить данные работника \nDelete - удалить данные работника \nEdit - редактирование данные работника \nExit - выход из программы ");
             return EnterCommand(Console.ReadLine());
         }
-
-
-
-
-
+        
         protected static void processCommandList()
         {
             Console.WriteLine("Нажмите следующую цифру от 1 до 7 чтобы вывести:");
@@ -129,6 +126,7 @@ namespace Console_App_NEW
 
         protected static void InitEmployeeList()
         {
+            // Почему бы тут сразу массив Employee не задать, чем все по отдельности?
             string[] Ids = { "1", "2", "3", "4", "5" }; //обойти форичем, и=0 , 
             string[] Name = { "Alexandr", "Alex", "Bond", "Sam", "Mat" };
             string[] Department = { "22", "19", "23", "22", "19" };
@@ -160,9 +158,9 @@ namespace Console_App_NEW
             try
             {
                 //Считываем индекс редактирования 
-                index = Int32.Parse(Console.ReadLine());
+                index = Int32.Parse(Console.ReadLine()); // Тут лучше использовать TryParse, тогда и оборачивать в try-catch не придется
             }
-            catch (Exception)
+            catch (Exception ex) // На случай, если надо будет залогировать либо вывести ошибку (ex)
             {
                 //Если индекс не существует выводим сообщение об ошибке
                 Console.WriteLine($"Ошибка, введено невалидное значение {index}");
@@ -238,13 +236,8 @@ namespace Console_App_NEW
             EmployeeList.Add(employee);
             Console.WriteLine("Запись добавлена");
         }
-
-
-
-
-
-
     }
+    
     public class Employee
     {
         ///<summary>
@@ -265,7 +258,7 @@ namespace Console_App_NEW
         ///<summary>
         ///Должность
         ///</summary>
-        public string Position { get; set; }//to do перевести в Enum
+        public string Position { get; set; }//TODO: перевести в Enum // 
 
         ///<summary>
         ///Заработная плата в рублях
@@ -282,6 +275,7 @@ namespace Console_App_NEW
         ///</summary>
         public DateTime BirthDate { get; set; }
 
+        // Это у нас "конструктор по-умолчанию", его можно не писать, т.к. он создасться автоматически
         public Employee()
         {
 
